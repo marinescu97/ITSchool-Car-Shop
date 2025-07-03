@@ -26,6 +26,20 @@ public class ProductServiceImpl implements ProductService {
         return productDTOs;
     }
 
+    @Override
+    public List<ProductDTO> findProductByBrandAndColourAndCapacityAndPrice(String brand, String colour, int capacity, double price) {
+        List<Product> products = repository.findProductByBrandAndColourAndCapacityAndPrice(brand, colour, capacity, price);
+        List<ProductDTO> productDTOs = new ArrayList<>();
+
+        products.forEach(product -> toDto(productDTOs, product));
+        return productDTOs;
+    }
+
+    @Override
+    public void deleteProductById(Long id) {
+        repository.deleteById(id);
+    }
+
     private void toDto(List<ProductDTO> productDTOs, Product product){
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getId());
@@ -35,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setCapacity(product.getCapacity());
         productDTO.setPrice(product.getPrice());
         productDTO.setYearOfManufacture(product.getYearOfManufacture());
+        productDTO.setDiscount(product.getDiscount());
 
         productDTOs.add(productDTO);
     }

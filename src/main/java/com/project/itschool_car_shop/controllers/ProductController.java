@@ -4,9 +4,7 @@ import com.project.itschool_car_shop.models.dtos.ProductDTO;
 import com.project.itschool_car_shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +21,21 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductDTO>> findAllProducts(){
         return ResponseEntity.ok(productService.findAllProducts());
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<ProductDTO>> findProductByBrandAndColourAndCapacityAndPrice(
+                                            @RequestParam String brand,
+                                            @RequestParam String colour,
+                                            @RequestParam Integer capacity,
+                                            @RequestParam Double price
+                                            ){
+        List<ProductDTO> productDTOS = productService.findProductByBrandAndColourAndCapacityAndPrice(brand, colour, capacity, price);
+        return ResponseEntity.ok(productDTOS);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProductById(@PathVariable Long id){
+        productService.deleteProductById(id);
     }
 }
