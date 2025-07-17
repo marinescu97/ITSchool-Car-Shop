@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -30,14 +31,17 @@ public class Product {
     private String colour;
 
     @Column(name = "capacity")
-    private int capacity;
+    private Integer capacity;
 
     @Column(name = "price")
-    private double price;
+    private Double price;
 
     @Column(name = "year_of_manufacture")
     private Date yearOfManufacture;
 
     @Column(name = "discount", precision = 5, scale = 2, nullable = false)
     private BigDecimal discount;
+
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders;
 }
